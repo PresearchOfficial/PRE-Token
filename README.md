@@ -1,2 +1,2 @@
 # PRE-Token
-Presearch Ethereum Token
+Presearch ERC-20 Token
