@@ -1,0 +1,24 @@
+{
+  "name": "PREToken",
+  "version": "1.0.0",
+  "description": "Presearch Token (PRE)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@openzeppelin/contracts-ethereum-package": "^3.0.0",
+    "@openzeppelin/truffle-upgrades": "^1.1.0",
+    "@openzeppelin/upgrades": "^2.8.0",
+    "chai": "^4.2.0",
+    "truffle": "^5.1.46",
+    "truffle-assertions": "^0.9.2"
+  },
+  "dependencies": {
+    "@openzeppelin/cli": "^2.8.2",
+    "solc": "^0.6.2"
+  }
+}
