@@ -28,10 +28,10 @@ To interact with your contract on the command line:
 1. run `truffle console`
 2. run `let pre = await PREToken.deployed()`
 3. run any contract functions on the `pre` object:
--- pre.transfer(addresses[1], 100)
--- pre.transferBatch([addresses[2],addresses[3]],[2000, 300000])
--- pre.totalSupply()
--- ...
+- pre.transfer(addresses[1], 100)
+- pre.transferBatch([addresses[2],addresses[3]],[2000, 300000])
+- pre.totalSupply()
+- ...
 
 ## IDE and Debugging
 TODO
