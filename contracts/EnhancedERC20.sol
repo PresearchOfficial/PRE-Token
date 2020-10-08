@@ -375,20 +375,21 @@ contract EnhancedERC20 is Initializable, ContextUpgradeSafe, IERC20 {
         require(recipients.length == amounts.length);
         _beforeTokenTransferBatch();
 
-        uint256 senderBalance = _balances[_msgSender()];
+        address sender = _msgSender();
+        uint256 senderBalance = _balances[sender];
         for (uint i = 0; i < amounts.length; i++) {
             uint amount = amounts[i];
             address recipient = recipients[i];
             require(senderBalance >= amount, "ERC20: Insufficient balance for batch transfer");
             require(recipient != address(0), "ERC20: transfer to the zero address");
-            if(_msgSender() != recipient){
+            if(sender != recipient){
                 //_beforeTokenTransfer(_msgSender(), recipient, amount); //save gas
                 senderBalance = senderBalance - amount;
                 _balances[recipient] += amount;
             }
-			emit Transfer(_msgSender(), recipient, amount);
+			emit Transfer(sender, recipient, amount);
         }
-        _balances[_msgSender()] = senderBalance;
+        _balances[sender] = senderBalance;
         return true;
     }
 
