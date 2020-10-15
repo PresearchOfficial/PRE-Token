@@ -20,6 +20,6 @@
   "dependencies": {
     "@openzeppelin/cli": "^2.8.2",
     "solc": "^0.6.2",
-    "truffle-flatten": "^1.0.8"
+    "truffle-flattener": "^1.5.0"
   }
 }
