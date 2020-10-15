@@ -1,28 +1,13 @@
-/**
- * Use this file to configure your truffle project. It's seeded with some
- * common settings for different networks and features like migrations,
- * compilation and testing. Uncomment the ones you need or modify
- * them to suit your project as necessary.
- *
- * More information about configuration can be found at:
- *
- * trufflesuite.com/docs/advanced/configuration
- *
- * To deploy via Infura you'll need a wallet provider (like @truffle/hdwallet-provider)
- * to sign your transactions before they're sent to a remote public node. Infura accounts
- * are available for free at: infura.io/register.
- *
- * You'll also need a mnemonic - the twelve word phrase the wallet uses to generate
- * public/private key pairs. If you're publishing your code to GitHub make sure you load this
- * phrase from a file you've .gitignored so it doesn't accidentally become public.
- *
- */
+ const web3 = require('web3');
 
-// const HDWalletProvider = require('@truffle/hdwallet-provider');
-// const infuraKey = "fj4jll3k.....";
-//
-// const fs = require('fs');
-// const mnemonic = fs.readFileSync(".secret").toString().trim();
+ const HDWalletProvider = require('@truffle/hdwallet-provider');
+
+ const { INFURA_PROJECT_ID, 
+         TEST_PRIVATE_KEYS, 
+         MAINNET_PRIVATE_KEYS, 
+         RINKEBY_PRIVATE_KEYS,
+         ROPSTEN_PRIVATE_KEYS, 
+         KOVAN_PRIVATE_KEYS } = require('./.secrets.json');
 
 module.exports = {
   /**
@@ -42,36 +27,71 @@ module.exports = {
     // tab if you use this network and you must also set the `host`, `port` and `network_id`
     // options below to some value.
     //
-     development: {
+    development: {
       host: "127.0.0.1",     // Localhost (default: none)
       port: 8545,            // Standard Ethereum port (default: none)
       network_id: "*",       // Any network (default: none)
-     }//,
-    // Another network with more advanced options...
-    // advanced: {
-    // port: 8777,             // Custom port
-    // network_id: 1342,       // Custom network
-    // gas: 8500000,           // Gas sent with each transaction (default: ~6700000)
-    // gasPrice: 20000000000,  // 20 gwei (in wei) (default: 100 gwei)
-    // from: <address>,        // Account to send txs from (default: accounts[0])
-    // websockets: true        // Enable EventEmitter interface for web3 (default: false)
-    // },
-    // Useful for deploying to a public network.
-    // NB: It's important to wrap the provider as a function.
-    // ropsten: {
-    // provider: () => new HDWalletProvider(mnemonic, `https://ropsten.infura.io/v3/YOUR-PROJECT-ID`),
-    // network_id: 3,       // Ropsten's id
-    // gas: 5500000,        // Ropsten has a lower block limit than mainnet
-    // confirmations: 2,    // # of confs to wait between deployments. (default: 0)
-    // timeoutBlocks: 200,  // # of blocks before a deployment times out  (minimum/default: 50)
-    // skipDryRun: true     // Skip dry run before migrations? (default: false for public nets )
-    // },
-    // Useful for private networks
-    // private: {
-    // provider: () => new HDWalletProvider(mnemonic, `https://network.io`),
-    // network_id: 2111,   // This network is yours, in the cloud.
-    // production: true    // Treats this network as if it was a public net. (default: false)
-    // }
+    },
+    test: {
+      provider: function () {
+        return new HDWalletProvider({
+          privateKeys: TEST_PRIVATE_KEYS, 
+          providerOrUrl: "http://127.0.0.1:8545",
+          addressIndex: 0,
+          numberOfAddresses: 3
+        })},
+      network_id: 2017,
+      skipDryRun:false
+    },
+    mainnet: {
+        provider: function () {
+            return new HDWalletProvider({
+              privateKeys: MAINNET_PRIVATE_KEYS, 
+              providerOrUrl: "https://mainnet.infura.io/v3/" + INFURA_PROJECT_ID,
+              numberOfAddresses: 3,
+              derivationPath: "m/44'/60'/0'/0"
+        })},
+      network_id: 1,
+      gasPrice: web3.utils.toWei("20", "gwei"),
+      skipDryRun:false
+    },
+    ropsten: {
+        provider: function () {
+            return new HDWalletProvider({
+              privateKeys: ROPSTEN_PRIVATE_KEYS, 
+              providerOrUrl: "https://ropsten.infura.io/v3/" + INFURA_PROJECT_ID,
+              numberOfAddresses: 3,
+              derivationPath: "m/44'/60'/0'/0"
+        })},
+        network_id: 3,       // Ropsten's id
+        gas: 5500000,        // Ropsten has a lower block limit than mainnet
+        confirmations: 2,    // # of confs to wait between deployments. (default: 0)
+        timeoutBlocks: 200,  // # of blocks before a deployment times out  (minimum/default: 50)
+        skipDryRun: false     // Skip dry run before migrations? (default: false for public net
+    },
+    rinkeby: {
+      provider: function () {
+      return new HDWalletProvider({
+          privateKeys: RINKEBY_PRIVATE_KEYS, 
+          providerOrUrl: "https://rinkeby.infura.io/v3/" + INFURA_PROJECT_ID,
+          numberOfAddresses: 3,
+          derivationPath: "m/44'/60'/0'/0"
+        })},
+      network_id: 4,
+      skipDryRun:false
+    },
+    kovan: {
+      provider: function () {
+        return new HDWalletProvider({
+          privateKeys: KOVAN_PRIVATE_KEYS, 
+          providerOrUrl: "https://kovan.infura.io/v3/" + INFURA_PROJECT_ID,
+          addressIndex: 0,
+          numberOfAddresses: 3,
+          //derivationPath: "m/44'/60'/0'/0"
+        })},
+      network_id: 42,
+      skipDryRun:false
+    }
   },
 
   // Set default mocha options here, use special reporters etc.
@@ -83,13 +103,11 @@ module.exports = {
   compilers: {
     solc: {
        version: "0.6.2",    // Fetch exact version from solc-bin (default: truffle's version)
-      // docker: true,        // Use "0.5.1" you've installed locally with docker (default: false)
        settings: {          // See the solidity docs for advice about optimization and evmVersion
         optimizer: {
           enabled: true,
           runs: 1337
         }
-      //  evmVersion: "byzantium"
       }
     }
   },
