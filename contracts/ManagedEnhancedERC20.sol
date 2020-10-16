@@ -1,4 +1,4 @@
-pragma solidity ^0.6.0;
+pragma solidity 0.6.2;
 
 import "@openzeppelin/contracts-ethereum-package/contracts/Initializable.sol";
 import "@openzeppelin/contracts-ethereum-package/contracts/access/AccessControl.sol";
@@ -13,10 +13,6 @@ import "@openzeppelin/contracts-ethereum-package/contracts/utils/Pausable.sol";
  */
 abstract contract ManagedEnhancedERC20 is Initializable, ContextUpgradeSafe, AccessControlUpgradeSafe, EnhancedERC20, PausableUpgradeSafe {
     bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
-    /*
-    bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
-    bytes32 public constant BURNER_ROLE = keccak256("BURNER_ROLE");
-    */
    
     function __ManagedEnhancedERC20_init(string memory name, string memory symbol) internal initializer {
         __Context_init_unchained();
@@ -27,13 +23,8 @@ abstract contract ManagedEnhancedERC20 is Initializable, ContextUpgradeSafe, Acc
     }
     
     function __ManagedEnhancedERC20_init_unchained() internal initializer {
-        
         _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
         _setupRole(PAUSER_ROLE, _msgSender());
-        /*
-        _setupRole(MINTER_ROLE, _msgSender());
-        _setupRole(BURNER_ROLE, _msgSender());
-        */
     }
 
         /**

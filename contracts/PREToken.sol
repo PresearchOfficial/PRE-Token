@@ -1,10 +1,8 @@
-pragma solidity ^0.6.2;
-
+pragma solidity 0.6.2;
 
 import "@openzeppelin/contracts-ethereum-package/contracts/Initializable.sol";
 import "@openzeppelin/contracts-ethereum-package/contracts/math/SafeMath.sol";
 import "./ManagedEnhancedERC20.sol";
-
 
 /**
  * @dev Presearch ERC20 Token
@@ -34,8 +32,5 @@ contract PREToken is Initializable, ManagedEnhancedERC20  {
         require(totalSupply().add(amount) <= _maxSupply);
         super._beforeMint(from, to, amount);
     }
-    
-    //TODO: Add the following line before we introduce any additional inheritance
-    //uint256[50] private __gap;
 
 }

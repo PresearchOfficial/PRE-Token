@@ -1,4 +1,4 @@
-pragma solidity ^0.6.0;
+pragma solidity 0.6.2;
 
 import "@openzeppelin/contracts-ethereum-package/contracts/GSN/Context.sol";
 import "@openzeppelin/contracts-ethereum-package/contracts/token/ERC20/IERC20.sol";
@@ -237,37 +237,17 @@ contract EnhancedERC20 is Initializable, ContextUpgradeSafe, IERC20 {
 */
 
     /**
-     * @dev Hook that is called before any transfer of tokens. This includes
-     * minting and burning.
+     * @dev Hook that is called before minting of tokens.
      *
      * To learn more about hooks, head to xref:ROOT:extending-contracts.adoc#using-hooks[Using Hooks].
      */
     function _beforeMint(address from, address to, uint256 amount) internal virtual { }
 
     /**
-     * @dev Hook that is called before any tokens are burned. 
+     * @dev Hook that is called before a transfering tokens out of an account to one or more token holders
      *
      * To learn more about hooks, head to xref:ROOT:extending-contracts.adoc#using-hooks[Using Hooks].
      */
-    function _beforeBurn(address from, address to, uint256 amount) internal virtual { }
-
-        /**
-     * @dev CURRENTLY UNUSED AND THEREFORE DISABLED TO SAVE GAS
-     * Hook that is called before any transfer of tokens. Unlike the original OpenZeppelin
-     * version, this hook DOES NOT GET CALLED during minting and burning. 
-     *  See _beforeMint and _beforeBurn for separate hooks to now handle minting and burning.
-     *
-     * While we may want some shared logic between minting, burning, and other token transfers, 
-     * minting and burning are special cases, and we don't want either for their logic to be 
-     * added to normal transfers OR for limits on normal transfers (i.e. pausing) to necessarily 
-     * impact minting and burning, so keeping the hooks separate to preserve flexibility.
-     * Calling conditions:
-     *
-     * To learn more about hooks, head to xref:ROOT:extending-contracts.adoc#using-hooks[Using Hooks].
-     */
-    //function _beforeTokenTransfer(address from, address to, uint256 amount) internal virtual { }
-
-
     function _beforeTokenTransferBatch() internal virtual { }
 
     /** @dev Creates `amount` tokens and assigns them to `account`, increasing
@@ -282,7 +262,6 @@ contract EnhancedERC20 is Initializable, ContextUpgradeSafe, IERC20 {
     function _mint(address account, uint256 amount) internal virtual {
         require(account != address(0), "ERC20: mint to the zero address");
 
-        //_beforeTokenTransfer(address(0), account, amount);
         _beforeMint(address(0), account, amount);
 
         _totalSupply = _totalSupply.add(amount);
@@ -291,45 +270,6 @@ contract EnhancedERC20 is Initializable, ContextUpgradeSafe, IERC20 {
     }
 
     /**
-     * @dev Destroys `amount` tokens from `account`, reducing the
-     * total supply.
-     *
-     * Emits a {Transfer} event with `to` set to the zero address.
-     *
-     * Requirements
-     *
-     * - `account` cannot be the zero address.
-     * - `account` must have at least `amount` tokens.
-     */
-    function _burn(address account, uint256 amount) internal virtual {
-        require(account != address(0), "ERC20: burn from the zero address");
-
-        //_beforeTokenTransfer(account, address(0), amount);
-        _beforeBurn(account, address(0), amount);
-
-        _balances[account] = _balances[account].sub(amount, "ERC20: burn amount exceeds balance");
-        _totalSupply = _totalSupply.sub(amount);
-        emit Transfer(account, address(0), amount);
-    }
-
-    /**
-     * @dev Enables the Token name to change in the future
-     *
-     */
-    function setName(string memory newName) internal {
-        _name = newName;
-    }
-
-    /**
-     * @dev Enables the Token symbol to change in the future
-     *
-     */
-    function setSymbol(string memory newSymbol) internal {
-        _symbol = newSymbol;
-    }
-
-
-        /**
      * @dev Moves tokens `amount` from `sender` to `recipient`.
      *
      * This is internal function is equivalent to {transfer}, and can be used to
@@ -348,7 +288,6 @@ contract EnhancedERC20 is Initializable, ContextUpgradeSafe, IERC20 {
         require(recipient != address(0), "ERC20: transfer to the zero address");
 
         _beforeTokenTransferBatch();
-        //_beforeTokenTransfer(sender, recipient, amount); //save gas
 
         _balances[sender] = _balances[sender].sub(amount, "ERC20: transfer amount exceeds balance");
         _balances[recipient] = _balances[recipient].add(amount);
@@ -357,8 +296,9 @@ contract EnhancedERC20 is Initializable, ContextUpgradeSafe, IERC20 {
 
     /**
      * @dev Send multiple transfers as a batch within a single transaction
-     * This is much more efficient than sending independent transactions. This
-     * method should save between 28% of gas (2 transfers) and 60% of gas (>100 transfers). 
+     * This is much more efficient than sending independent transactions. 
+     * This method should between 28% of gas (2 transfers) 
+     * and 50%-60% of gas (10+ transfers)
      *
      * Calling conditions:
      *
@@ -366,7 +306,7 @@ contract EnhancedERC20 is Initializable, ContextUpgradeSafe, IERC20 {
      *
      * Requirements:
      *
-     * - `_recipients[]` length must equal  `_values` length.
+     * - `recipients[]` length must equal  `amounts[]` length.
      * -  The amount to send `recipients[i]` must be at `amounts[i]`
      * - `recipient` cannot be the zero address.
      * - `balance` of the calling account must be >= the sum of values in `amounts` going to other accounts
@@ -383,7 +323,6 @@ contract EnhancedERC20 is Initializable, ContextUpgradeSafe, IERC20 {
             require(senderBalance >= amount, "ERC20: Insufficient balance for batch transfer");
             require(recipient != address(0), "ERC20: transfer to the zero address");
             if(sender != recipient){
-                //_beforeTokenTransfer(_msgSender(), recipient, amount); //save gas
                 senderBalance = senderBalance - amount;
                 _balances[recipient] += amount;
             }
