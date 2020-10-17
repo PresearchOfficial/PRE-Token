@@ -1,0 +1,151 @@
+{
+  "manifestVersion": "3.1",
+  "impls": {
+    "04173612f3b74f46e641220a124785fc77545b28704a4eac6c304f8eaf324a23": {
+      "address": "0x6C110A0C3521bd674Bfc5B815fb26a15f9b7172e",
+      "txHash": "0x83500505ff081eb5afe63b754a074197ae7689daad351938584cff66e0b1fd1b",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "initialized",
+            "type": "t_bool",
+            "src": "../@openzeppelin/contracts-ethereum-package/contracts/Initializable.sol:21"
+          },
+          {
+            "contract": "Initializable",
+            "label": "initializing",
+            "type": "t_bool",
+            "src": "../@openzeppelin/contracts-ethereum-package/contracts/Initializable.sol:26"
+          },
+          {
+            "contract": "Initializable",
+            "label": "______gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "../@openzeppelin/contracts-ethereum-package/contracts/Initializable.sol:61"
+          },
+          {
+            "contract": "ContextUpgradeSafe",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "../@openzeppelin/contracts-ethereum-package/contracts/GSN/Context.sol:37"
+          },
+          {
+            "contract": "AccessControlUpgradeSafe",
+            "label": "_roles",
+            "type": "t_mapping(t_bytes32,t_struct(RoleData)1049_storage)",
+            "src": "../@openzeppelin/contracts-ethereum-package/contracts/access/AccessControl.sol:58"
+          },
+          {
+            "contract": "AccessControlUpgradeSafe",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "../@openzeppelin/contracts-ethereum-package/contracts/access/AccessControl.sol:210"
+          },
+          {
+            "contract": "EnhancedERC20",
+            "label": "_balances",
+            "type": "t_mapping(t_address,t_uint256)",
+            "src": "EnhancedERC20.sol:37"
+          },
+          {
+            "contract": "EnhancedERC20",
+            "label": "_allowances",
+            "type": "t_mapping(t_address,t_mapping(t_address,t_uint256))",
+            "src": "EnhancedERC20.sol:39"
+          },
+          {
+            "contract": "EnhancedERC20",
+            "label": "_totalSupply",
+            "type": "t_uint256",
+            "src": "EnhancedERC20.sol:41"
+          },
+          {
+            "contract": "EnhancedERC20",
+            "label": "_name",
+            "type": "t_string_storage",
+            "src": "EnhancedERC20.sol:43"
+          },
+          {
+            "contract": "EnhancedERC20",
+            "label": "_symbol",
+            "type": "t_string_storage",
+            "src": "EnhancedERC20.sol:44"
+          },
+          {
+            "contract": "EnhancedERC20",
+            "label": "_decimals",
+            "type": "t_uint8",
+            "src": "EnhancedERC20.sol:45"
+          },
+          {
+            "contract": "EnhancedERC20",
+            "label": "__gap",
+            "type": "t_array(t_uint256)44_storage",
+            "src": "EnhancedERC20.sol:396"
+          },
+          {
+            "contract": "PausableUpgradeSafe",
+            "label": "_paused",
+            "type": "t_bool",
+            "src": "../@openzeppelin/contracts-ethereum-package/contracts/utils/Pausable.sol:26"
+          },
+          {
+            "contract": "PausableUpgradeSafe",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "../@openzeppelin/contracts-ethereum-package/contracts/utils/Pausable.sol:84"
+          },
+          {
+            "contract": "ManagedEnhancedERC20",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "ManagedEnhancedERC20.sol:80"
+          },
+          {
+            "contract": "PREToken",
+            "label": "_maxSupply",
+            "type": "t_uint256",
+            "src": "PREToken.sol:17"
+          }
+        ],
+        "types": {
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          },
+          "t_bool": {
+            "label": "bool"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)"
+          },
+          "t_mapping(t_address,t_mapping(t_address,t_uint256))": {
+            "label": "mapping(address => mapping(address => uint256))"
+          },
+          "t_string_storage": {
+            "label": "string"
+          },
+          "t_uint8": {
+            "label": "uint8"
+          },
+          "t_array(t_uint256)44_storage": {
+            "label": "uint256[44]"
+          },
+          "t_mapping(t_bytes32,t_struct(RoleData)1049_storage)": {
+            "label": "mapping(bytes32 => struct AccessControlUpgradeSafe.RoleData)"
+          }
+        }
+      }
+    }
+  },
+  "admin": {
+    "address": "0xeA305F7D5c9f15B171A26aD78fa71F423c1b8F6D",
+    "txHash": "0x129a8b4eceed983a94044a82d800ecc2b35414da64b4a3ad4ee04b5be99eca13"
+  }
+}
