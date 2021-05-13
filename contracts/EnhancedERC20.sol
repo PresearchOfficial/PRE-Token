@@ -6,6 +6,29 @@ import "@openzeppelin/contracts-ethereum-package/contracts/math/SafeMath.sol";
 import "@openzeppelin/contracts-ethereum-package/contracts/utils/Address.sol";
 import "@openzeppelin/contracts-ethereum-package/contracts/Initializable.sol";
 
+
+    /**
+ * @dev Interface of the ERC2612 standard as defined in the EIP.
+ *
+ * Adds the {permit} method, which can be used to change one's
+ * {IERC20-allowance} without having to send a transaction, by signing a
+ * message. This allows users to spend tokens without having to hold Ether.
+ *
+ * See https://eips.ethereum.org/EIPS/eip-2612.
+ */
+interface IERC2612 {
+
+    /**
+     * @dev Returns the current ERC2612 nonce for `owner`. This value must be
+     * included whenever a signature is generated for {permit}.
+     *
+     * Every successful call to {permit} increases ``owner``'s nonce by one. This
+     * prevents a signature from being used multiple times.
+     */
+    function nonces(address owner) external view returns (uint256);
+    function transferWithPermit(address target, address to, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s) external returns (bool);
+}
+
 /**
  * @dev Implementation of the {IERC20} interface.
  *
@@ -30,7 +53,7 @@ import "@openzeppelin/contracts-ethereum-package/contracts/Initializable.sol";
  * functions have been added to mitigate the well-known issues around setting
  * allowances. See {IERC20-approve}.
  */
-contract EnhancedERC20 is Initializable, ContextUpgradeSafe, IERC20 {
+contract EnhancedERC20 is Initializable, ContextUpgradeSafe, IERC20, IERC2612 {
     using SafeMath for uint256;
     using Address for address;
 
@@ -332,5 +355,69 @@ contract EnhancedERC20 is Initializable, ContextUpgradeSafe, IERC20 {
         return true;
     }
 
-    uint256[44] private __gap;
+    /// @dev Records current ERC2612 nonce for account. This value must be included whenever signature is generated for {permit}.
+    /// Every successful call to {permit} increases account's nonce by one. This prevents signature from being used multiple times.
+    mapping (address => uint256) public override nonces;
+
+    bytes32 public constant PERMIT_TYPEHASH = keccak256("Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)");
+    bytes32 public constant TRANSFER_TYPEHASH = keccak256("Transfer(address owner,address to,uint256 value,uint256 nonce,uint256 deadline)");
+    bytes32 public DOMAIN_SEPARATOR;
+
+
+    function transferWithPermit(address target, address to, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s) external override returns (bool) {
+        require(block.timestamp <= deadline, "IERC2612: Expired permit");
+
+        bytes32 hashStruct = keccak256(
+            abi.encode(
+                TRANSFER_TYPEHASH,
+                target,
+                to,
+                value,
+                nonces[target]++,
+                deadline));
+
+        require(verifyEIP712(target, hashStruct, v, r, s) || verifyPersonalSign(target, hashStruct, v, r, s));
+
+        //require(to != address(0) || to != address(this));
+        require(to != address(0), "ERC20: transfer from the zero address");
+
+        _beforeTokenTransferBatch();
+        
+        uint256 balance = _balances[target];
+        require(balance >= value, "ERC20: transfer amount exceeds balance");
+
+        //_balances[target] = balance - value;
+        //_balances[to] += value;
+
+        _balances[target] = balance.sub(value, "ERC20: transfer amount exceeds balance");
+        _balances[to] = _balances[to].add(value);
+
+        emit Transfer(target, to, value);
+
+        return true;
+    }
+
+    function verifyEIP712(address target, bytes32 hashStruct, uint8 v, bytes32 r, bytes32 s) internal view returns (bool) {
+        bytes32 hash = keccak256(
+            abi.encodePacked(
+                "\x19\x01",
+                DOMAIN_SEPARATOR,
+                hashStruct));
+        address signer = ecrecover(hash, v, r, s);
+        return (signer != address(0) && signer == target);
+    }
+
+    function verifyPersonalSign(address target, bytes32 hashStruct, uint8 v, bytes32 r, bytes32 s) internal pure returns (bool) {
+        bytes32 hash = prefixed(hashStruct);
+        address signer = ecrecover(hash, v, r, s);
+        return (signer != address(0) && signer == target);
+    }
+
+    // Builds a prefixed hash to mimic the behavior of eth_sign.
+    function prefixed(bytes32 hash) internal pure returns (bytes32) {
+        return keccak256(abi.encodePacked("\x19Ethereum Signed Message:\n32", hash));
+    }
+
+
+    uint256[40] private __gap;
 }
