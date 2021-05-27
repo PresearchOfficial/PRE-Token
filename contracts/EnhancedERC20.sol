@@ -6,6 +6,8 @@ import "@openzeppelin/contracts-ethereum-package/contracts/math/SafeMath.sol";
 import "@openzeppelin/contracts-ethereum-package/contracts/utils/Address.sol";
 import "@openzeppelin/contracts-ethereum-package/contracts/Initializable.sol";
 
+import { EIP712 } from "./lib/EIP712.sol";
+
 
     /**
  * @dev Interface of the ERC2612 standard as defined in the EIP.
@@ -16,7 +18,7 @@ import "@openzeppelin/contracts-ethereum-package/contracts/Initializable.sol";
  *
  * See https://eips.ethereum.org/EIPS/eip-2612.
  */
-interface IERC2612 {
+//interface IERC2612 {
 
     /**
      * @dev Returns the current ERC2612 nonce for `owner`. This value must be
@@ -25,9 +27,9 @@ interface IERC2612 {
      * Every successful call to {permit} increases ``owner``'s nonce by one. This
      * prevents a signature from being used multiple times.
      */
-    function nonces(address owner) external view returns (uint256);
-    function transferWithPermit(address target, address to, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s) external returns (bool);
-}
+//    function nonces(address owner) external view returns (uint256);
+//    function transferWithPermit(address target, address to, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s) external returns (bool);
+//}
 
 /**
  * @dev Implementation of the {IERC20} interface.
@@ -53,7 +55,7 @@ interface IERC2612 {
  * functions have been added to mitigate the well-known issues around setting
  * allowances. See {IERC20-approve}.
  */
-contract EnhancedERC20 is Initializable, ContextUpgradeSafe, IERC20, IERC2612 {
+contract EnhancedERC20 is Initializable, ContextUpgradeSafe, IERC20 {
     using SafeMath for uint256;
     using Address for address;
 
@@ -86,6 +88,7 @@ contract EnhancedERC20 is Initializable, ContextUpgradeSafe, IERC20, IERC2612 {
         _name = name;
         _symbol = symbol;
         _decimals = 18;
+        DOMAIN_SEPARATOR = EIP712.makeDomainSeparator(name, "1");
     }
 
     /**
@@ -357,13 +360,14 @@ contract EnhancedERC20 is Initializable, ContextUpgradeSafe, IERC20, IERC2612 {
 
     /// @dev Records current ERC2612 nonce for account. This value must be included whenever signature is generated for {permit}.
     /// Every successful call to {permit} increases account's nonce by one. This prevents signature from being used multiple times.
-    mapping (address => uint256) public override nonces;
+    //mapping (address => uint256) public override nonces;
 
-    bytes32 public constant PERMIT_TYPEHASH = keccak256("Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)");
-    bytes32 public constant TRANSFER_TYPEHASH = keccak256("Transfer(address owner,address to,uint256 value,uint256 nonce,uint256 deadline)");
-    bytes32 public DOMAIN_SEPARATOR;
+    //bytes32 public constant PERMIT_TYPEHASH = keccak256("Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)");
+    //bytes32 public constant TRANSFER_TYPEHASH = keccak256("Transfer(address owner,address to,uint256 value,uint256 nonce,uint256 deadline)");
+    //bytes32 public DOMAIN_SEPARATOR;
 
 
+/*
     function transferWithPermit(address target, address to, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s) external override returns (bool) {
         require(block.timestamp <= deadline, "IERC2612: Expired permit");
 
@@ -416,6 +420,307 @@ contract EnhancedERC20 is Initializable, ContextUpgradeSafe, IERC20, IERC2612 {
     // Builds a prefixed hash to mimic the behavior of eth_sign.
     function prefixed(bytes32 hash) internal pure returns (bytes32) {
         return keccak256(abi.encodePacked("\x19Ethereum Signed Message:\n32", hash));
+    }
+*/
+
+
+
+/** EIP712 */
+    /**
+     * @dev EIP712 Domain Separator
+     */
+    bytes32 public DOMAIN_SEPARATOR;
+
+
+/*********EIP3009 */
+
+    // keccak256("TransferWithAuthorization(address from,address to,uint256 value,uint256 validAfter,uint256 validBefore,bytes32 nonce)")
+    bytes32
+        public constant TRANSFER_WITH_AUTHORIZATION_TYPEHASH = 0x7c7c6cdb67a18743f49ec6fa9b35f50d52ed05cbed4cc592e13b44501c1a2267;
+
+    // keccak256("ReceiveWithAuthorization(address from,address to,uint256 value,uint256 validAfter,uint256 validBefore,bytes32 nonce)")
+    bytes32
+        public constant RECEIVE_WITH_AUTHORIZATION_TYPEHASH = 0xd099cc98ef71107a616c4f0f941f04c322d8e254fe26b3c6668db87aae413de8;
+
+    // keccak256("CancelAuthorization(address authorizer,bytes32 nonce)")
+    bytes32
+        public constant CANCEL_AUTHORIZATION_TYPEHASH = 0x158b0a9edf7a828aad02f63cd515c68ef2f50ba807396f6d12842833a1597429;
+
+    /**
+     * @dev authorizer address => nonce => state (true = used / false = unused)
+     */
+    mapping(address => mapping(bytes32 => bool)) internal _authorizationStates;
+
+    event AuthorizationUsed(address indexed authorizer, bytes32 indexed nonce);
+    event AuthorizationCanceled(
+        address indexed authorizer,
+        bytes32 indexed nonce
+    );
+
+    string
+        internal constant _INVALID_SIGNATURE_ERROR = "EIP3009: invalid signature";
+    string
+        internal constant _AUTHORIZATION_USED_ERROR = "EIP3009: authorization is used";
+
+    /**
+     * @notice Returns the state of an authorization
+     * @dev Nonces are randomly generated 32-byte data unique to the authorizer's
+     * address
+     * @param authorizer    Authorizer's address
+     * @param nonce         Nonce of the authorization
+     * @return True if the nonce is used
+     */
+    function authorizationState(address authorizer, bytes32 nonce)
+        external
+        view
+        returns (bool)
+    {
+        return _authorizationStates[authorizer][nonce];
+    }
+
+    /**
+     * @notice Execute a transfer with a signed authorization
+     * @param from          Payer's address (Authorizer)
+     * @param to            Payee's address
+     * @param value         Amount to be transferred
+     * @param validAfter    The time after which this is valid (unix time)
+     * @param validBefore   The time before which this is valid (unix time)
+     * @param nonce         Unique nonce
+     * @param v             v of the signature
+     * @param r             r of the signature
+     * @param s             s of the signature
+     */
+    function transferWithAuthorization(
+        address from,
+        address to,
+        uint256 value,
+        uint256 validAfter,
+        uint256 validBefore,
+        bytes32 nonce,
+        uint8 v,
+        bytes32 r,
+        bytes32 s
+    ) external {
+        _transferWithAuthorization(
+            TRANSFER_WITH_AUTHORIZATION_TYPEHASH,
+            from,
+            to,
+            value,
+            validAfter,
+            validBefore,
+            nonce,
+            v,
+            r,
+            s
+        );
+    }
+
+    /**
+     * @notice Receive a transfer with a signed authorization from the payer
+     * @dev This has an additional check to ensure that the payee's address matches
+     * the caller of this function to prevent front-running attacks. (See security
+     * considerations)
+     * @param from          Payer's address (Authorizer)
+     * @param to            Payee's address
+     * @param value         Amount to be transferred
+     * @param validAfter    The time after which this is valid (unix time)
+     * @param validBefore   The time before which this is valid (unix time)
+     * @param nonce         Unique nonce
+     * @param v             v of the signature
+     * @param r             r of the signature
+     * @param s             s of the signature
+     */
+    function receiveWithAuthorization(
+        address from,
+        address to,
+        uint256 value,
+        uint256 validAfter,
+        uint256 validBefore,
+        bytes32 nonce,
+        uint8 v,
+        bytes32 r,
+        bytes32 s
+    ) external {
+        require(to == msg.sender, "EIP3009: caller must be the payee");
+
+        _transferWithAuthorization(
+            RECEIVE_WITH_AUTHORIZATION_TYPEHASH,
+            from,
+            to,
+            value,
+            validAfter,
+            validBefore,
+            nonce,
+            v,
+            r,
+            s
+        );
+    }
+
+    /**
+     * @notice Attempt to cancel an authorization
+     * @param authorizer    Authorizer's address
+     * @param nonce         Nonce of the authorization
+     * @param v             v of the signature
+     * @param r             r of the signature
+     * @param s             s of the signature
+     */
+    function cancelAuthorization(
+        address authorizer,
+        bytes32 nonce,
+        uint8 v,
+        bytes32 r,
+        bytes32 s
+    ) external {
+        require(
+            !_authorizationStates[authorizer][nonce],
+            _AUTHORIZATION_USED_ERROR
+        );
+
+        bytes memory data = abi.encode(
+            CANCEL_AUTHORIZATION_TYPEHASH,
+            authorizer,
+            nonce
+        );
+        require(
+            EIP712.recover(DOMAIN_SEPARATOR, v, r, s, data) == authorizer,
+            _INVALID_SIGNATURE_ERROR
+        );
+
+        _authorizationStates[authorizer][nonce] = true;
+        emit AuthorizationCanceled(authorizer, nonce);
+    }
+
+    function _transferWithAuthorization(
+        bytes32 typeHash,
+        address from,
+        address to,
+        uint256 value,
+        uint256 validAfter,
+        uint256 validBefore,
+        bytes32 nonce,
+        uint8 v,
+        bytes32 r,
+        bytes32 s
+    ) internal {
+        require(now > validAfter, "EIP3009: authorization is not yet valid");
+        require(now < validBefore, "EIP3009: authorization is expired");
+        require(!_authorizationStates[from][nonce], _AUTHORIZATION_USED_ERROR);
+
+        bytes memory data = abi.encode(
+            typeHash,
+            from,
+            to,
+            value,
+            validAfter,
+            validBefore,
+            nonce
+        );
+        require(
+            EIP712.recover(DOMAIN_SEPARATOR, v, r, s, data) == from,
+            _INVALID_SIGNATURE_ERROR
+        );
+
+        _authorizationStates[from][nonce] = true;
+        emit AuthorizationUsed(from, nonce);
+
+        _transfer(from, to, value);
+    }
+
+
+   /** EIP-2612 */ 
+
+  // keccak256("Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)")
+    bytes32
+        public constant PERMIT_TYPEHASH = 0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9;
+        //bytes32 public constant PERMIT_TYPEHASH = keccak256("Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)");
+    bytes32 
+        public constant TRANSFER_TYPEHASH = keccak256("Transfer(address owner,address to,uint256 value,uint256 nonce,uint256 deadline)");
+
+
+    mapping(address => uint256) internal _nonces;
+
+    /**
+     * @notice Nonces for permit
+     * @param owner Token owner's address
+     * @return Next nonce
+     */
+    function nonces(address owner) external view returns (uint256) {
+        return _nonces[owner];
+    }
+
+    /**
+     * @notice update allowance with a signed permit
+     * @param owner     Token owner's address (Authorizer)
+     * @param spender   Spender's address
+     * @param value     Amount of allowance
+     * @param deadline  The time at which this expires (unix time)
+     * @param v         v of the signature
+     * @param r         r of the signature
+     * @param s         s of the signature
+     */
+    function permit(
+        address owner,
+        address spender,
+        uint256 value,
+        uint256 deadline,
+        uint8 v,
+        bytes32 r,
+        bytes32 s
+    ) external {
+        require(deadline >= now, "EIP2612: permit is expired");
+
+        bytes memory data = abi.encode(
+            PERMIT_TYPEHASH,
+            owner,
+            spender,
+            value,
+            _nonces[owner]++,
+            deadline
+        );
+        require(
+            EIP712.recover(DOMAIN_SEPARATOR, v, r, s, data) == owner,
+            "EIP2612: invalid signature"
+        );
+
+        _approve(owner, spender, value);
+    }
+
+    function transferWithPermit(address target, address to, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s) external returns (bool) {
+        require(block.timestamp <= deadline, "EIP2612: Expired permit");
+
+         bytes memory data = abi.encode(
+            TRANSFER_TYPEHASH,
+            target,
+            to,
+            value,
+            _nonces[target]++,
+            deadline
+        );
+        require(
+            EIP712.recover(DOMAIN_SEPARATOR, v, r, s, data) == target,
+            "EIP2612: invalid signature"
+        );
+        //require(verifyEIP712(target, hashStruct, v, r, s) || verifyPersonalSign(target, hashStruct, v, r, s));
+
+
+        //require(to != address(0) || to != address(this));
+        require(to != address(0), "ERC20: transfer from the zero address");
+
+        _beforeTokenTransferBatch();
+        
+        uint256 balance = _balances[target];
+        require(balance >= value, "ERC20: transfer amount exceeds balance");
+
+        //_balances[target] = balance - value;
+        //_balances[to] += value;
+
+        _balances[target] = balance.sub(value, "ERC20: transfer amount exceeds balance");
+        _balances[to] = _balances[to].add(value);
+
+        emit Transfer(target, to, value);
+
+        return true;
     }
 
 
