@@ -11,7 +11,6 @@
   "license": "ISC",
   "devDependencies": {
     "@openzeppelin/contracts-ethereum-package": "^3.0.0",
-    "@openzeppelin/truffle-upgrades": "^1.1.0",
     "@openzeppelin/upgrades": "^2.8.0",
     "chai": "^4.2.0",
     "truffle": "^5.1.46",
@@ -19,6 +18,7 @@
   },
   "dependencies": {
     "@openzeppelin/cli": "^2.8.2",
+    "@openzeppelin/truffle-upgrades": "^1.7.0",
     "@truffle/hdwallet-provider": "^1.1.1",
     "solc": "^0.6.2",
     "truffle-flattener": "^1.5.0",

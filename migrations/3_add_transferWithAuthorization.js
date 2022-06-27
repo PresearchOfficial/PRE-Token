@@ -2,11 +2,10 @@
 const { upgradeProxy } = require('@openzeppelin/truffle-upgrades');
 
 const PREToken = artifacts.require('PREToken');
-//const PREToken = artifacts.require('PREToken');
+const PRETokenV2 = artifacts.require('PRETokenV2');
 
 module.exports = async function (deployer) {
   const existing = await PREToken.deployed();
-  const instance = await upgradeProxy(existing.address, PREToken, 
-    { deployer,  initializer: "initialize", unsafeAllowCustomTypes: true  });
+  const instance = await upgradeProxy(existing.address, PRETokenV2, { deployer, initializer: "initializeV2"});
   console.log("Upgraded", instance.address);
 };
