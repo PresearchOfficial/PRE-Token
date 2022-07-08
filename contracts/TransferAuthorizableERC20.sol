@@ -7,13 +7,17 @@ import "@openzeppelin/contracts-ethereum-package/contracts/utils/Pausable.sol";
 import "./ManagedEnhancedERC20.sol";
 import { EIP712 } from "./lib/EIP712.sol";
 
+import "./lib/EIP712Upgradeable.sol";
+import { ECDSAUpgradeable } from "./lib/ECDSAUpgradeable.sol";
+import "./lib/ECRecover.sol";
+
 /**
  * @dev ERC20 token with pausable token transfers.
  *
  * Useful as an emergency switch for freezing all token transfers in the
  * event of a large bug or major project-impacting event.
  */
-abstract contract TransferAuthorizableERC20 is Initializable, ManagedEnhancedERC20 {
+abstract contract TransferAuthorizableERC20 is Initializable, ManagedEnhancedERC20, EIP712Upgradeable {
     bytes32 public constant TRANSFER_AUTHORIZER_ROLE = keccak256("TRANSFER_AUTHORIZER_ROLE");
    
     function __TransferAuthorizableERC20_init(string memory name, string memory symbol) internal initializer {
@@ -33,11 +37,25 @@ abstract contract TransferAuthorizableERC20 is Initializable, ManagedEnhancedERC
     /**
      * @dev EIP712 Domain Separator
      */
-    bytes32 internal DOMAIN_SEPARATOR;
+    //bytes32 public DOMAIN_SEPARATOR;
+
+    //function getAddressThisFromEIP712() external view returns(address) {
+    //    //return EIP712.getAddressThisFromEIP712();
+    //    return this._ad
+    //}
+
+    //function calculateDomainSeparator() external view returns(bytes32) {
+    //    return EIP712.makeDomainSeparator(name(), "1");
+    //}
+
+    function getDomainSeparator() public view returns(bytes32) {
+        return _domainSeparatorV4(); //DOMAIN_SEPARATOR;
+    }
 
     function _setupTransferAuthorizable() internal
     {
-        DOMAIN_SEPARATOR = EIP712.makeDomainSeparator(name(), "1");
+        //DOMAIN_SEPARATOR = EIP712.makeDomainSeparator(name(), "1");
+        _initialize(name(), "1");
         _setupRole(TRANSFER_AUTHORIZER_ROLE, _msgSender());
     } 
 
@@ -194,7 +212,7 @@ abstract contract TransferAuthorizableERC20 is Initializable, ManagedEnhancedERC
             nonce
         );
         require(
-            EIP712.recover(DOMAIN_SEPARATOR, v, r, s, data) == authorizer,
+            EIP712.recover(getDomainSeparator(), v, r, s, data) == authorizer,
             _INVALID_SIGNATURE_ERROR
         );
 
@@ -228,7 +246,7 @@ abstract contract TransferAuthorizableERC20 is Initializable, ManagedEnhancedERC
             nonce
         );
         require(
-            EIP712.recover(DOMAIN_SEPARATOR, v, r, s, data) == from,
+            EIP712.recover(getDomainSeparator(), v, r, s, data) == from,
             _INVALID_SIGNATURE_ERROR
         );
 

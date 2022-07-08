@@ -82,6 +82,7 @@ module.exports = {
         });
       },
       network_id: 5,
+      gasPrice: web3.utils.toWei("2", "gwei"),
       skipDryRun: false
     },
     loc_development_development: {
