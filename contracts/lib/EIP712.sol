@@ -25,6 +25,7 @@
 pragma solidity 0.6.2;
 
 import { ECRecover } from "./ECRecover.sol";
+//import "@openzeppelin/contracts-ethereum-package/contracts/utils/Strings.sol";
 
 /**
  * @title EIP712
@@ -61,6 +62,14 @@ library EIP712 {
                     address(this)    //Fixed bug in proposal
                 )
             );
+    }
+
+    function getAddressThisFromEIP712() internal view returns(address) {
+        return address(this);
+    }
+
+    function getEIP712_DOMAIN_TYPEHASH() internal pure returns(bytes32) {
+        return EIP712_DOMAIN_TYPEHASH;
     }
 
     /**

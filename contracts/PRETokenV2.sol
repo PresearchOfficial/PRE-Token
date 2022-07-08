@@ -13,7 +13,7 @@ import "./TransferAuthorizableERC20.sol";
  */
 contract PRETokenV2 is PREToken, TransferAuthorizableERC20 {
 
-    function initializeV2() public{
+    function initialize() public {
       require(hasRole(DEFAULT_ADMIN_ROLE, _msgSender()), "TransferAuthorizableERC20: Only Admin role can run this method.");
       _setupTransferAuthorizable();   
     }
