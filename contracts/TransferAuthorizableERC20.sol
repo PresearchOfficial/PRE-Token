@@ -5,10 +5,8 @@ import "@openzeppelin/contracts-ethereum-package/contracts/access/AccessControl.
 import "./EnhancedERC20.sol";
 import "@openzeppelin/contracts-ethereum-package/contracts/utils/Pausable.sol";
 import "./ManagedEnhancedERC20.sol";
-//import { EIP712 } from "./lib/EIP712.sol";
-import "./lib/EIP712Upgradeable.sol";
+import "./EIP712Upgradeable.sol";
 import { ECDSAUpgradeable } from "./lib/ECDSAUpgradeable.sol";
-//import "./lib/ECRecover.sol";
 
 /**
  * @dev ERC20 token with pausable token transfers.
@@ -194,13 +192,8 @@ abstract contract TransferAuthorizableERC20 is Initializable, ManagedEnhancedERC
             authorizer,
             nonce
         );        
-        //require(
-        //    EIP712.recover(getDomainSeparator(), v, r, s, data) == authorizer,
-        //    _INVALID_SIGNATURE_ERROR
-        //);
-        
-        bytes32 structHash = keccak256(data);
-        bytes32 typedDataHash = ECDSAUpgradeable.toTypedDataHash(getDomainSeparator(), structHash);
+
+        bytes32 typedDataHash = ECDSAUpgradeable.toTypedDataHash(getDomainSeparator(), keccak256(data));
         
         require(
             ECDSAUpgradeable.recover(typedDataHash, v, r, s) == authorizer,
@@ -236,14 +229,8 @@ abstract contract TransferAuthorizableERC20 is Initializable, ManagedEnhancedERC
             validBefore,
             nonce
         );
-        //require(
-        //    EIP712.recover(getDomainSeparator(), v, r, s, data) == from,
-        //    _INVALID_SIGNATURE_ERROR
-        //);
-        //bytes32 encodedData = keccak256(data); 
         
-        bytes32 structHash = keccak256(data);
-        bytes32 typedDataHash = ECDSAUpgradeable.toTypedDataHash(getDomainSeparator(), structHash);
+        bytes32 typedDataHash = ECDSAUpgradeable.toTypedDataHash(getDomainSeparator(), keccak256(data));
         
         require(
             ECDSAUpgradeable.recover(typedDataHash, v, r, s) == from,
