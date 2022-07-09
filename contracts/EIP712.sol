@@ -28,9 +28,9 @@ import "./lib/ECDSA.sol";
  */
 abstract contract EIP712Upgradeable is Initializable {
     /* solhint-disable var-name-mixedcase */
-    bytes32 public _HASHED_NAME;
-    bytes32 public _HASHED_VERSION;
-    bytes32 public constant _TYPE_HASH = keccak256("EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)");
+    bytes32 private _HASHED_NAME;
+    bytes32 private _HASHED_VERSION;
+    bytes32 private constant _TYPE_HASH = keccak256("EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)");
 
     /* solhint-enable var-name-mixedcase */
 

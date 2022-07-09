@@ -30,8 +30,8 @@ abstract contract TransferAuthorizableERC20 is Initializable, ManagedEnhancedERC
         _setupTransferAuthorizable();
     }
 
-    function getDomainSeparator() public view returns(bytes32) {
-        return _domainSeparatorV4(); //DOMAIN_SEPARATOR;
+    function getDomainSeparator() external view returns(bytes32) {
+        return _domainSeparatorV4();
     }
 
     function _setupTransferAuthorizable() internal
@@ -193,7 +193,7 @@ abstract contract TransferAuthorizableERC20 is Initializable, ManagedEnhancedERC
             nonce
         );        
 
-        bytes32 typedDataHash = ECDSAUpgradeable.toTypedDataHash(getDomainSeparator(), keccak256(data));
+        bytes32 typedDataHash = ECDSAUpgradeable.toTypedDataHash(_domainSeparatorV4(), keccak256(data));
         
         require(
             ECDSAUpgradeable.recover(typedDataHash, v, r, s) == authorizer,
@@ -230,7 +230,7 @@ abstract contract TransferAuthorizableERC20 is Initializable, ManagedEnhancedERC
             nonce
         );
         
-        bytes32 typedDataHash = ECDSAUpgradeable.toTypedDataHash(getDomainSeparator(), keccak256(data));
+        bytes32 typedDataHash = ECDSAUpgradeable.toTypedDataHash(_domainSeparatorV4(), keccak256(data));
         
         require(
             ECDSAUpgradeable.recover(typedDataHash, v, r, s) == from,
