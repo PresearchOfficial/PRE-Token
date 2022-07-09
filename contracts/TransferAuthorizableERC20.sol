@@ -5,8 +5,8 @@ import "@openzeppelin/contracts-ethereum-package/contracts/access/AccessControl.
 import "./EnhancedERC20.sol";
 import "@openzeppelin/contracts-ethereum-package/contracts/utils/Pausable.sol";
 import "./ManagedEnhancedERC20.sol";
-import "./EIP712Upgradeable.sol";
-import { ECDSAUpgradeable } from "./lib/ECDSAUpgradeable.sol";
+import "./EIP712.sol";
+import { ECDSAUpgradeable } from "./lib/ECDSA.sol";
 
 /**
  * @dev ERC20 token with pausable token transfers.

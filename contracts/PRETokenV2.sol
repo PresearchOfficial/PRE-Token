@@ -1,8 +1,5 @@
 pragma solidity 0.6.2;
 
-import "@openzeppelin/contracts-ethereum-package/contracts/Initializable.sol";
-import "@openzeppelin/contracts-ethereum-package/contracts/math/SafeMath.sol";
-import "./ManagedEnhancedERC20.sol";
 import "./PREToken.sol";
 import "./TransferAuthorizableERC20.sol";
 
