@@ -10,9 +10,13 @@ import "./TransferAuthorizableERC20.sol";
  */
 contract PRETokenV2 is PREToken, TransferAuthorizableERC20 {
 
+    bool private _initializedV2;
+
     function initialize() public {
-      require(hasRole(DEFAULT_ADMIN_ROLE, _msgSender()), "TransferAuthorizableERC20: Only Admin role can run this method.");
-      _setupTransferAuthorizable();   
+      require (!_initializedV2, "PRETokenV2: Contract is already initialized");
+      require(hasRole(DEFAULT_ADMIN_ROLE, _msgSender()), "TransferAuthorizableERC20: Only Admin role can run this method");
+      _setupTransferAuthorizable();
+      _initializedV2 = true;   
     }
 
     function _beforeMint(address from, address to, uint256 amount) internal virtual override(EnhancedERC20, PREToken) {
