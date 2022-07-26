@@ -12,7 +12,7 @@ import "./ManagedEnhancedERC20.sol";
 contract PREToken is Initializable, ManagedEnhancedERC20  {
     using SafeMath for uint256;
 
-    uint256 private _maxSupply;
+    uint256 internal _maxSupply;
 
     function initialize(string memory name, string memory symbol) public initializer {
         __Context_init_unchained();
@@ -32,5 +32,7 @@ contract PREToken is Initializable, ManagedEnhancedERC20  {
         require(totalSupply().add(amount) <= _maxSupply);
         super._beforeMint(from, to, amount);
     }
+
+    uint256[50] private __gap;
 
 }

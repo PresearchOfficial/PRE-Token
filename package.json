@@ -1,17 +1,20 @@
 {
   "name": "PREToken",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Presearch Token (PRE)",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "truffle test"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/PresearchOfficial/PRE-Token.git"
+  },
   "devDependencies": {
     "@openzeppelin/contracts-ethereum-package": "^3.0.0",
-    "@openzeppelin/truffle-upgrades": "^1.1.0",
     "@openzeppelin/upgrades": "^2.8.0",
     "chai": "^4.2.0",
     "truffle": "^5.1.46",
@@ -19,6 +22,7 @@
   },
   "dependencies": {
     "@openzeppelin/cli": "^2.8.2",
+    "@openzeppelin/truffle-upgrades": "^1.15.0",
     "@truffle/hdwallet-provider": "^1.1.1",
     "solc": "^0.6.2",
     "truffle-flattener": "^1.5.0",
