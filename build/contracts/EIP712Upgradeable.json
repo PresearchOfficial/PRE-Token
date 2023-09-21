@@ -1,15 +1,15 @@
 {
   "contractName": "EIP712Upgradeable",
   "abi": [],
-  "metadata": "{\"compiler\":{\"version\":\"0.6.2+commit.bacdbe57\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"details\":\"https://eips.ethereum.org/EIPS/eip-712[EIP 712] is a standard for hashing and signing of typed structured data. * The encoding specified in the EIP is very generic, and such a generic implementation in Solidity is not feasible, thus this contract does not implement the encoding itself. Protocols need to implement the type-specific encoding they need in their contracts using a combination of `abi.encode` and `keccak256`. * This contract implements the EIP 712 domain separator ({_domainSeparatorV4}) that is used as part of the encoding scheme, and the final step of the encoding to obtain the message digest that is then signed via ECDSA ({_hashTypedDataV4}). * The implementation of the domain separator was designed to be as efficient as possible while still properly updating the chain id to protect against replay attacks on an eventual fork of the chain. * NOTE: This contract implements the version of the encoding known as \\\"v4\\\", as implemented by the JSON RPC method https://docs.metamask.io/guide/signing-data.html[`eth_signTypedDataV4` in MetaMask]. * _Available since v3.4._ \",\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/Users/treygrainger/Development/presearch/PRE-Token-Final-Test/contracts/EIP712.sol\":\"EIP712Upgradeable\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":1337},\"remappings\":[]},\"sources\":{\"/Users/treygrainger/Development/presearch/PRE-Token-Final-Test/contracts/EIP712.sol\":{\"keccak256\":\"0xbf8729c5a74cc7d33d015ced77aed9be4a61c0889e819975040395e670bc47e8\",\"urls\":[\"bzz-raw://36253585931e38add4d8d25027a530cb87ff5de4b09d7a3c7606fdbefba04885\",\"dweb:/ipfs/QmbhMWvWjJ9nTnw6BhKLZaZUjScbJdXsfePvhqQH2VJer7\"]},\"/Users/treygrainger/Development/presearch/PRE-Token-Final-Test/contracts/lib/ECDSA.sol\":{\"keccak256\":\"0x481d7a6735bac6e6e016031a38a6274fa3f8ae0edc23b9c57a7ed51e2e64ef44\",\"urls\":[\"bzz-raw://fac9423f3da6c4d7d79d8b32e23b7fc6ee229bf742a97ba5102cbe03138dabed\",\"dweb:/ipfs/QmRMpgXY3t8XqoTSairxqMy7ffMUGrZ5151fHV1Ddqvywa\"]},\"/Users/treygrainger/Development/presearch/PRE-Token-Final-Test/contracts/lib/Strings.sol\":{\"keccak256\":\"0x6ed29d4b74b431656696ed702942d4635b4a77e18d4c484e6a8a46ebdd4f1685\",\"urls\":[\"bzz-raw://5205a0ec35d60f5a528566ac66396f88398ffd8c21c624ee6d6cb1333bbbe47c\",\"dweb:/ipfs/Qmdp1z6yLy1i4DjfLMLtuQPt4Hu1C4QooNhZHLx1dvM6rw\"]},\"@openzeppelin/contracts-ethereum-package/contracts/Initializable.sol\":{\"keccak256\":\"0x9bfec92e36234ecc99b5d37230acb6cd1f99560233753162204104a4897e8721\",\"urls\":[\"bzz-raw://5cf7c208583d4d046d75bd99f5507412ab01cce9dd9f802ce9768a416d93ea2f\",\"dweb:/ipfs/QmcQS1BBMPpVEkXP3qzwSjxHNrqDek8YeR7xbVWDC9ApC7\"]}},\"version\":1}",
+  "metadata": "{\"compiler\":{\"version\":\"0.6.2+commit.bacdbe57\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"details\":\"https://eips.ethereum.org/EIPS/eip-712[EIP 712] is a standard for hashing and signing of typed structured data. * The encoding specified in the EIP is very generic, and such a generic implementation in Solidity is not feasible, thus this contract does not implement the encoding itself. Protocols need to implement the type-specific encoding they need in their contracts using a combination of `abi.encode` and `keccak256`. * This contract implements the EIP 712 domain separator ({_domainSeparatorV4}) that is used as part of the encoding scheme, and the final step of the encoding to obtain the message digest that is then signed via ECDSA ({_hashTypedDataV4}). * The implementation of the domain separator was designed to be as efficient as possible while still properly updating the chain id to protect against replay attacks on an eventual fork of the chain. * NOTE: This contract implements the version of the encoding known as \\\"v4\\\", as implemented by the JSON RPC method https://docs.metamask.io/guide/signing-data.html[`eth_signTypedDataV4` in MetaMask]. * _Available since v3.4._ \",\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/Users/treygrainger/Desktop/PRE-Token-multisig/contracts/EIP712.sol\":\"EIP712Upgradeable\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":1337},\"remappings\":[]},\"sources\":{\"/Users/treygrainger/Desktop/PRE-Token-multisig/contracts/EIP712.sol\":{\"keccak256\":\"0xbf8729c5a74cc7d33d015ced77aed9be4a61c0889e819975040395e670bc47e8\",\"urls\":[\"bzz-raw://36253585931e38add4d8d25027a530cb87ff5de4b09d7a3c7606fdbefba04885\",\"dweb:/ipfs/QmbhMWvWjJ9nTnw6BhKLZaZUjScbJdXsfePvhqQH2VJer7\"]},\"/Users/treygrainger/Desktop/PRE-Token-multisig/contracts/lib/ECDSA.sol\":{\"keccak256\":\"0x481d7a6735bac6e6e016031a38a6274fa3f8ae0edc23b9c57a7ed51e2e64ef44\",\"urls\":[\"bzz-raw://fac9423f3da6c4d7d79d8b32e23b7fc6ee229bf742a97ba5102cbe03138dabed\",\"dweb:/ipfs/QmRMpgXY3t8XqoTSairxqMy7ffMUGrZ5151fHV1Ddqvywa\"]},\"/Users/treygrainger/Desktop/PRE-Token-multisig/contracts/lib/Strings.sol\":{\"keccak256\":\"0x6ed29d4b74b431656696ed702942d4635b4a77e18d4c484e6a8a46ebdd4f1685\",\"urls\":[\"bzz-raw://5205a0ec35d60f5a528566ac66396f88398ffd8c21c624ee6d6cb1333bbbe47c\",\"dweb:/ipfs/Qmdp1z6yLy1i4DjfLMLtuQPt4Hu1C4QooNhZHLx1dvM6rw\"]},\"@openzeppelin/contracts-ethereum-package/contracts/Initializable.sol\":{\"keccak256\":\"0x9bfec92e36234ecc99b5d37230acb6cd1f99560233753162204104a4897e8721\",\"urls\":[\"bzz-raw://5cf7c208583d4d046d75bd99f5507412ab01cce9dd9f802ce9768a416d93ea2f\",\"dweb:/ipfs/QmcQS1BBMPpVEkXP3qzwSjxHNrqDek8YeR7xbVWDC9ApC7\"]}},\"version\":1}",
   "bytecode": "0x",
   "deployedBytecode": "0x",
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "// SPDX-License-Identifier: MIT\n// OpenZeppelin Contracts v4.4.1 (utils/cryptography/draft-EIP712.sol)\n\npragma solidity ^0.6.2;\n\nimport \"@openzeppelin/contracts-ethereum-package/contracts/Initializable.sol\";\nimport \"./lib/ECDSA.sol\";\n\n/**\n * @dev https://eips.ethereum.org/EIPS/eip-712[EIP 712] is a standard for hashing and signing of typed structured data.\n *\n * The encoding specified in the EIP is very generic, and such a generic implementation in Solidity is not feasible,\n * thus this contract does not implement the encoding itself. Protocols need to implement the type-specific encoding\n * they need in their contracts using a combination of `abi.encode` and `keccak256`.\n *\n * This contract implements the EIP 712 domain separator ({_domainSeparatorV4}) that is used as part of the encoding\n * scheme, and the final step of the encoding to obtain the message digest that is then signed via ECDSA\n * ({_hashTypedDataV4}).\n *\n * The implementation of the domain separator was designed to be as efficient as possible while still properly updating\n * the chain id to protect against replay attacks on an eventual fork of the chain.\n *\n * NOTE: This contract implements the version of the encoding known as \"v4\", as implemented by the JSON RPC method\n * https://docs.metamask.io/guide/signing-data.html[`eth_signTypedDataV4` in MetaMask].\n *\n * _Available since v3.4._\n *\n */\nabstract contract EIP712Upgradeable is Initializable {\n    /* solhint-disable var-name-mixedcase */\n    bytes32 private _HASHED_NAME;\n    bytes32 private _HASHED_VERSION;\n    bytes32 private constant _TYPE_HASH = keccak256(\"EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)\");\n\n    /* solhint-enable var-name-mixedcase */\n\n    /**\n     * @dev Initializes the domain separator and parameter caches.\n     *\n     * The meaning of `name` and `version` is specified in\n     * https://eips.ethereum.org/EIPS/eip-712#definition-of-domainseparator[EIP 712]:\n     *\n     * - `name`: the user readable name of the signing domain, i.e. the name of the DApp or the protocol.\n     * - `version`: the current major version of the signing domain.\n     *\n     * NOTE: These parameters cannot be changed except through a xref:learn::upgrading-smart-contracts.adoc[smart\n     * contract upgrade].\n     */\n    function __EIP712_init(string memory name, string memory version) internal {\n        __EIP712_init_unchained(name, version);\n    }\n\n    function __EIP712_init_unchained(string memory name, string memory version) internal {\n        _initialize(name, version);\n    }\n\n    function _initialize(string memory name, string memory version) internal {\n        bytes32 hashedName = keccak256(bytes(name));\n        bytes32 hashedVersion = keccak256(bytes(version));\n        _HASHED_NAME = hashedName;\n        _HASHED_VERSION = hashedVersion;\n    }\n\n    /**\n     * @dev Returns the domain separator for the current chain.\n     */\n    function _domainSeparatorV4() internal view returns (bytes32) {\n        return _buildDomainSeparator(_TYPE_HASH, _EIP712NameHash(), _EIP712VersionHash());\n    }\n\n    function _buildDomainSeparator(\n        bytes32 typeHash,\n        bytes32 nameHash,\n        bytes32 versionHash\n    ) private view returns (bytes32) {\n         uint256 chainId;\n        assembly {\n            chainId := chainid()\n        }\n\n        return keccak256(abi.encode(typeHash, nameHash, versionHash, chainId, address(this)));\n    }\n\n    /**\n     * @dev Given an already https://eips.ethereum.org/EIPS/eip-712#definition-of-hashstruct[hashed struct], this\n     * function returns the hash of the fully encoded EIP712 message for this domain.\n     *\n     * This hash can be used together with {ECDSA-recover} to obtain the signer of a message. For example:\n     *\n     * ```solidity\n     * bytes32 digest = _hashTypedDataV4(keccak256(abi.encode(\n     *     keccak256(\"Mail(address to,string contents)\"),\n     *     mailTo,\n     *     keccak256(bytes(mailContents))\n     * )));\n     * address signer = ECDSA.recover(digest, signature);\n     * ```\n     */\n    function _hashTypedDataV4(bytes32 structHash) internal view virtual returns (bytes32) {\n        return ECDSAUpgradeable.toTypedDataHash(_domainSeparatorV4(), structHash);\n    }\n\n    /**\n     * @dev The hash of the name parameter for the EIP712 domain.\n     *\n     * NOTE: This function reads from storage by default, but can be redefined to return a constant value if gas costs\n     * are a concern.\n     */\n    function _EIP712NameHash() internal virtual view returns (bytes32) {\n        return _HASHED_NAME;\n    }\n\n    /**\n     * @dev The hash of the version parameter for the EIP712 domain.\n     *\n     * NOTE: This function reads from storage by default, but can be redefined to return a constant value if gas costs\n     * are a concern.\n     */\n    function _EIP712VersionHash() internal virtual view returns (bytes32) {\n        return _HASHED_VERSION;\n    }\n\n    /**\n     * @dev This empty reserved space is put in place to allow future versions to add new\n     * variables without shifting down storage in the inheritance chain.\n     * See https://docs.openzeppelin.com/contracts/4.x/upgradeable#storage_gaps\n     */\n    uint256[50] private __gap;\n}",
-  "sourcePath": "/Users/treygrainger/Development/presearch/PRE-Token-Final-Test/contracts/EIP712.sol",
+  "sourcePath": "/Users/treygrainger/Desktop/PRE-Token-multisig/contracts/EIP712.sol",
   "ast": {
-    "absolutePath": "/Users/treygrainger/Development/presearch/PRE-Token-Final-Test/contracts/EIP712.sol",
+    "absolutePath": "/Users/treygrainger/Desktop/PRE-Token-multisig/contracts/EIP712.sol",
     "exportedSymbols": {
       "EIP712Upgradeable": [
         154
@@ -35,18 +35,18 @@
         "id": 2,
         "nodeType": "ImportDirective",
         "scope": 155,
-        "sourceUnit": 2139,
+        "sourceUnit": 2326,
         "src": "129:78:0",
         "symbolAliases": [],
         "unitAlias": ""
       },
       {
-        "absolutePath": "/Users/treygrainger/Development/presearch/PRE-Token-Final-Test/contracts/lib/ECDSA.sol",
+        "absolutePath": "/Users/treygrainger/Desktop/PRE-Token-multisig/contracts/lib/ECDSA.sol",
         "file": "./lib/ECDSA.sol",
         "id": 3,
         "nodeType": "ImportDirective",
         "scope": 155,
-        "sourceUnit": 1825,
+        "sourceUnit": 2012,
         "src": "208:25:0",
         "symbolAliases": [],
         "unitAlias": ""
@@ -61,10 +61,10 @@
               "id": 4,
               "name": "Initializable",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 2138,
+              "referencedDeclaration": 2325,
               "src": "1420:13:0",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_Initializable_$2138",
+                "typeIdentifier": "t_contract$_Initializable_$2325",
                 "typeString": "contract Initializable"
               }
             },
@@ -74,7 +74,7 @@
           }
         ],
         "contractDependencies": [
-          2138
+          2325
         ],
         "contractKind": "contract",
         "documentation": "@dev https://eips.ethereum.org/EIPS/eip-712[EIP 712] is a standard for hashing and signing of typed structured data.\n * The encoding specified in the EIP is very generic, and such a generic implementation in Solidity is not feasible,\nthus this contract does not implement the encoding itself. Protocols need to implement the type-specific encoding\nthey need in their contracts using a combination of `abi.encode` and `keccak256`.\n * This contract implements the EIP 712 domain separator ({_domainSeparatorV4}) that is used as part of the encoding\nscheme, and the final step of the encoding to obtain the message digest that is then signed via ECDSA\n({_hashTypedDataV4}).\n * The implementation of the domain separator was designed to be as efficient as possible while still properly updating\nthe chain id to protect against replay attacks on an eventual fork of the chain.\n * NOTE: This contract implements the version of the encoding known as \"v4\", as implemented by the JSON RPC method\nhttps://docs.metamask.io/guide/signing-data.html[`eth_signTypedDataV4` in MetaMask].\n * _Available since v3.4._\n ",
@@ -82,7 +82,7 @@
         "id": 154,
         "linearizedBaseContracts": [
           154,
-          2138
+          2325
         ],
         "name": "EIP712Upgradeable",
         "nodeType": "ContractDefinition",
@@ -1704,10 +1704,10 @@
                         "name": "ECDSAUpgradeable",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 1824,
+                        "referencedDeclaration": 2011,
                         "src": "4163:16:0",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_type$_t_contract$_ECDSAUpgradeable_$1824_$",
+                          "typeIdentifier": "t_type$_t_contract$_ECDSAUpgradeable_$2011_$",
                           "typeString": "type(library ECDSAUpgradeable)"
                         }
                       },
@@ -1718,7 +1718,7 @@
                       "lValueRequested": false,
                       "memberName": "toTypedDataHash",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 1823,
+                      "referencedDeclaration": 2010,
                       "src": "4163:32:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_pure$_t_bytes32_$_t_bytes32_$returns$_t_bytes32_$",
@@ -2053,7 +2053,7 @@
     "src": "104:5112:0"
   },
   "legacyAST": {
-    "absolutePath": "/Users/treygrainger/Development/presearch/PRE-Token-Final-Test/contracts/EIP712.sol",
+    "absolutePath": "/Users/treygrainger/Desktop/PRE-Token-multisig/contracts/EIP712.sol",
     "exportedSymbols": {
       "EIP712Upgradeable": [
         154
@@ -2079,18 +2079,18 @@
         "id": 2,
         "nodeType": "ImportDirective",
         "scope": 155,
-        "sourceUnit": 2139,
+        "sourceUnit": 2326,
         "src": "129:78:0",
         "symbolAliases": [],
         "unitAlias": ""
       },
       {
-        "absolutePath": "/Users/treygrainger/Development/presearch/PRE-Token-Final-Test/contracts/lib/ECDSA.sol",
+        "absolutePath": "/Users/treygrainger/Desktop/PRE-Token-multisig/contracts/lib/ECDSA.sol",
         "file": "./lib/ECDSA.sol",
         "id": 3,
         "nodeType": "ImportDirective",
         "scope": 155,
-        "sourceUnit": 1825,
+        "sourceUnit": 2012,
         "src": "208:25:0",
         "symbolAliases": [],
         "unitAlias": ""
@@ -2105,10 +2105,10 @@
               "id": 4,
               "name": "Initializable",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 2138,
+              "referencedDeclaration": 2325,
               "src": "1420:13:0",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_Initializable_$2138",
+                "typeIdentifier": "t_contract$_Initializable_$2325",
                 "typeString": "contract Initializable"
               }
             },
@@ -2118,7 +2118,7 @@
           }
         ],
         "contractDependencies": [
-          2138
+          2325
         ],
         "contractKind": "contract",
         "documentation": "@dev https://eips.ethereum.org/EIPS/eip-712[EIP 712] is a standard for hashing and signing of typed structured data.\n * The encoding specified in the EIP is very generic, and such a generic implementation in Solidity is not feasible,\nthus this contract does not implement the encoding itself. Protocols need to implement the type-specific encoding\nthey need in their contracts using a combination of `abi.encode` and `keccak256`.\n * This contract implements the EIP 712 domain separator ({_domainSeparatorV4}) that is used as part of the encoding\nscheme, and the final step of the encoding to obtain the message digest that is then signed via ECDSA\n({_hashTypedDataV4}).\n * The implementation of the domain separator was designed to be as efficient as possible while still properly updating\nthe chain id to protect against replay attacks on an eventual fork of the chain.\n * NOTE: This contract implements the version of the encoding known as \"v4\", as implemented by the JSON RPC method\nhttps://docs.metamask.io/guide/signing-data.html[`eth_signTypedDataV4` in MetaMask].\n * _Available since v3.4._\n ",
@@ -2126,7 +2126,7 @@
         "id": 154,
         "linearizedBaseContracts": [
           154,
-          2138
+          2325
         ],
         "name": "EIP712Upgradeable",
         "nodeType": "ContractDefinition",
@@ -3748,10 +3748,10 @@
                         "name": "ECDSAUpgradeable",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 1824,
+                        "referencedDeclaration": 2011,
                         "src": "4163:16:0",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_type$_t_contract$_ECDSAUpgradeable_$1824_$",
+                          "typeIdentifier": "t_type$_t_contract$_ECDSAUpgradeable_$2011_$",
                           "typeString": "type(library ECDSAUpgradeable)"
                         }
                       },
@@ -3762,7 +3762,7 @@
                       "lValueRequested": false,
                       "memberName": "toTypedDataHash",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 1823,
+                      "referencedDeclaration": 2010,
                       "src": "4163:32:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_pure$_t_bytes32_$_t_bytes32_$returns$_t_bytes32_$",
@@ -4102,7 +4102,7 @@
   },
   "networks": {},
   "schemaVersion": "3.2.5",
-  "updatedAt": "2022-07-23T01:59:09.143Z",
+  "updatedAt": "2023-09-01T04:41:41.797Z",
   "devdoc": {
     "details": "https://eips.ethereum.org/EIPS/eip-712[EIP 712] is a standard for hashing and signing of typed structured data. * The encoding specified in the EIP is very generic, and such a generic implementation in Solidity is not feasible, thus this contract does not implement the encoding itself. Protocols need to implement the type-specific encoding they need in their contracts using a combination of `abi.encode` and `keccak256`. * This contract implements the EIP 712 domain separator ({_domainSeparatorV4}) that is used as part of the encoding scheme, and the final step of the encoding to obtain the message digest that is then signed via ECDSA ({_hashTypedDataV4}). * The implementation of the domain separator was designed to be as efficient as possible while still properly updating the chain id to protect against replay attacks on an eventual fork of the chain. * NOTE: This contract implements the version of the encoding known as \"v4\", as implemented by the JSON RPC method https://docs.metamask.io/guide/signing-data.html[`eth_signTypedDataV4` in MetaMask]. * _Available since v3.4._ ",
     "methods": {}
