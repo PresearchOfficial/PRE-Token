@@ -21,7 +21,8 @@ The final audit report reflecting the token deployment was completed on October 
 2. run `truffle compile`
 
 ## Generate PRE Token Source Code for Verification
-run `truffle-flattener contracts/PREToken.sol > build/source/PREToken.sol`
+run `truffle-flattener contracts/PRETokenV2.sol > 
+build/source/PRETokenV2.sol`
 
 ## Generate Proxy Source Code for Verification (Used for Upgrades)
 run `truffle-flattener node_modules/@openzeppelin/upgrades/contracts/upgradeability/AdminUpgradeabilityProxy.sol > build/source/AdminUpgradabilityProxy.sol && truffle-flattener node_modules/@openzeppelin/upgrades/contracts/upgradeability/ProxyAdmin.sol > build/source/ProxyAdmin.sol`
