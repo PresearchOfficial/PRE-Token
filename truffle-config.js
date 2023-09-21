@@ -18,7 +18,8 @@ module.exports = {
         });
       },
       network_id: 2017,
-      skipDryRun: false
+      skipDryRun: false,
+      proxyAdminOwner: "0xC74C5aaA34fa9F3e70D421D88D6b30a13dA7fAe2"
     },
     mainnet: {
       provider: function () {
@@ -30,8 +31,9 @@ module.exports = {
         });
       },
       network_id: 1,
-      gasPrice: web3.utils.toWei("20", "gwei"),
-      skipDryRun: false
+      proxyAdminOwner: "0x06b978B64BcC3180C4d429592CEDe387f8Eb6E48",
+      gasPrice: web3.utils.toWei("25", "gwei"),
+      skipDryRun: false, 
     },
     ropsten: {
       provider: function () {
@@ -78,11 +80,12 @@ module.exports = {
           privateKeys: GOERLI_PRIVATE_KEYS,
           providerOrUrl: "https://goerli.infura.io/v3/" + INFURA_PROJECT_ID,
           addressIndex: 0,
-          numberOfAddresses: 3
+          numberOfAddresses: 3,
         });
       },
       network_id: 5,
-      gasPrice: web3.utils.toWei("2", "gwei"),
+      proxyAdminOwner: "0xD67Ac189DAbc24FA566699B60F011CE150992698",
+      gasPrice: web3.utils.toWei("1", "gwei"),
       skipDryRun: false
     },
     loc_development_development: {

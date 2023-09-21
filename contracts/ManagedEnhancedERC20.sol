@@ -37,7 +37,7 @@ abstract contract ManagedEnhancedERC20 is Initializable, ContextUpgradeSafe, Acc
      * - the caller must have the `PAUSER_ROLE`.
      */
     function pause() public {
-        require(hasRole(PAUSER_ROLE, _msgSender()), "PauseableEnhancedERC20: must have pauser role to pause");
+        require(hasRole(PAUSER_ROLE, _msgSender()), "ManagedEnhancedERC20: must have pauser role to pause");
         _pause();
     }
 
@@ -51,7 +51,7 @@ abstract contract ManagedEnhancedERC20 is Initializable, ContextUpgradeSafe, Acc
      * - the caller must have the `PAUSER_ROLE`.
      */
     function unpause() public {
-        require(hasRole(PAUSER_ROLE, _msgSender()), "PauseableEnhancedERC20: must have pauser role to unpause");
+        require(hasRole(PAUSER_ROLE, _msgSender()), "ManagedEnhancedERC20: must have pauser role to unpause");
         _unpause();
     }
 

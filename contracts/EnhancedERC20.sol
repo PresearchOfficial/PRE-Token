@@ -243,6 +243,14 @@ contract EnhancedERC20 is Initializable, ContextUpgradeSafe, IERC20 {
      */
     function _beforeMint(address from, address to, uint256 amount) internal virtual { }
 
+
+    /**
+     * @dev Hook that is called before any tokens are burned. 
+     *
+     * To learn more about hooks, head to xref:ROOT:extending-contracts.adoc#using-hooks[Using Hooks].
+     */
+    function _beforeBurn(address from, address to, uint256 amount) internal virtual { }
+
     /**
      * @dev Hook that is called before a transfering tokens out of an account to one or more token holders
      *
@@ -267,6 +275,27 @@ contract EnhancedERC20 is Initializable, ContextUpgradeSafe, IERC20 {
         _totalSupply = _totalSupply.add(amount);
         _balances[account] = _balances[account].add(amount);
         emit Transfer(address(0), account, amount);
+    }
+
+    /**
+     * @dev Destroys `amount` tokens from `account`, reducing the
+     * total supply.
+     *
+     * Emits a {Transfer} event with `to` set to the zero address.
+     *
+     * Requirements
+     *
+     * - `account` cannot be the zero address.
+     * - `account` must have at least `amount` tokens.
+     */
+    function _burn(address account, uint256 amount) internal virtual {
+        require(account != address(0), "ERC20: burn from the zero address");
+
+        _beforeBurn(account, address(0), amount);
+
+        _balances[account] = _balances[account].sub(amount, "ERC20: burn amount exceeds balance");
+        _totalSupply = _totalSupply.sub(amount);
+        emit Transfer(account, address(0), amount);
     }
 
     /**
